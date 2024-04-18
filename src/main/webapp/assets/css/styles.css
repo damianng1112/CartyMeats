@@ -1,0 +1,204 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e4bf80;
+    color: #602033;
+}
+
+/* Header styles */
+header {
+    background-color: #602033;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+    color: #e4bf80;
+}
+
+.user-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #e4bf80; 
+    cursor: pointer;
+}
+
+/* Navbar styles */
+nav {
+    background-color: #602033;
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    color: #e4bf80;
+    text-decoration: none;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+/* Product list styles */
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+}
+
+.product-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-item h2 {
+    margin-top: 0;
+    color: #804000;
+}
+
+.tab-pane {
+  padding: 20px;
+}
+
+.tab-pane h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.tab-pane p {
+  margin: 10px 0;
+}
+
+.tab-pane form {
+  margin-top: 20px;
+}
+
+.tab-pane .form-group {
+  margin-bottom: 10px;
+}
+
+.tab-pane .form-control {
+  width: 100%;
+}
+
+.tab-pane #addProduct .form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.tab-pane #user {
+  background-color: #f5f5dc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tab-pane #addProduct {
+  background-color: #f5f5dc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tab-pane #home {
+  background-color: #f5f5dc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture img {
+    width: 106px;
+    height: 106px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.profile-details {
+    text-align: center;
+}
+
+.profile-heading {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.divider {
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.profile-info p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.margin-right {
+    margin-right: 16px; /* Adjust the value as needed */
+}
+
+.text-theme {
+    color: #e4bf80; 
+}
+
+#product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    width: 45%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 10px;
+}
+
+@media (max-width: 768px) {
+    .product-item {
+        width: 100%; /* On smaller screens, products will take the full width */
+    }
+}
+
+/* Footer styles */
+footer {
+    background-color: #602033;
+    padding: 20px;
+    color: #e4bf80;
+    text-align: center;
+}
