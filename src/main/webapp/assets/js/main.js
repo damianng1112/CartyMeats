@@ -190,6 +190,21 @@ function fetchProducts() {
     });
 }
 
+function fetchSurveys() {
+    $.ajax({
+        type: 'GET',
+        url: 'FetchSurveyServlet',
+        dataType: 'json',
+        success: function(survey) {
+            renderSurveys(survey);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Failed to fetch surveys. Please try again later.');
+        }
+    });
+}
+
 function updateClient() {
     var updatedClient = {
 		"id": $('#editClientId').val(),
@@ -379,6 +394,29 @@ var renderClients = function(data) {
     }
 };
 
+var renderSurveys = function(data) {
+    // Check if data is not empty
+    if (data.length > 0) {
+        // Clear existing rows from the table
+        $('#surveysTable').DataTable().clear().draw();
+        
+        // Store all data into a list
+        var list = data;
+        
+        $.each(list, function(index, survey) {
+            // Render client data onto the webpage
+            var row = $('<tr>');
+            row.append('<td>' + survey.location + '</td>');
+            row.append('<td>' + survey.product + '</td>');
+            row.append('<td>' + survey.price + '</td>');
+            row.append('<td>' + survey.barcode + '</td>');
+            $('#surveysTable').DataTable().row.add(row).draw();
+        });
+    } else {
+        console.error("No surveys data received or invalid format.");
+    }
+};
+
 var renderFeedbacks = function(data) {
     // Check if data is not empty
     if (data.length > 0) {
@@ -485,6 +523,7 @@ var updateAllList = function () {
     $('#prodName').empty();
     // Fetch and render the updated list
     fetchClients(); 
+    fetchSurveys();
     fetchProducts();
     fetchClientsForDropdown();
     fetchProductsForDropdown();

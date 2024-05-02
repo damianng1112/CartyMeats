@@ -23,7 +23,7 @@
             <li class="active"><a href="#feedback" role="tab" data-toggle="tab">Feedback</a></li>
             <li><a href="#products" role="tab" data-toggle="tab">Products</a></li>
             <li><a href="#clients" role="tab" data-toggle="tab">Clients</a></li>
-            <li><a href="#user" role="tab" data-toggle="tab">User Details</a></li>
+            <li><a href="#price_survey" role="tab" data-toggle="tab">Price Survey</a></li>
         </ul>
     </nav>
     <main>
@@ -146,23 +146,23 @@
 			    </div>
 			</div>
 
-            <!-- User Details -->
-            <!-- To be changed to price survey -->
-			<div class="tab-pane" id="user">
-				<div class="profile-card">
-				    <div class="profile-picture">
-				    	<h4 class="profile-heading">My Profile</h4>	
-				        <img src="assets/images/prfImage.jpg" alt="Profile Picture">
-				    </div>
-				    <div class="profile-details">
-				        <p><i class="fa fa-user fa-fw margin-right text-theme"></i>User Name: <c:out value="${sessionScope.employeeInfo.username}"/></p>
-				        <hr class="divider">
-				        <div class="profile-info">
-				            <p><i class="fa fa-envelope fa-fw margin-right text-theme"></i>Email: <c:out value="${sessionScope.employeeInfo.email}"/></p>
-				            <p><i class="fa fa-phone fa-fw margin-right text-theme"></i>Contact: <c:out value="${sessionScope.employeeInfo.contact}"/></p>
-				        </div>
-				    </div>
-				</div>
+            <!-- Price Survey -->
+			<div class="tab-pane" id="price_survey">
+                <h2>Price Survey</h2>
+                <!-- Table for price survey -->
+                <table id="surveysTable" class="display table table-striped table-bordered">
+			        <thead>
+			            <tr>
+			                <th>Location</th>
+			                <th>Product</th>
+			                <th>Price</th>
+			                <th>Barcode</th>
+			            </tr>
+			        </thead>
+			        <tbody id="table_body_survey">
+			        
+			        </tbody>
+			    </table>
 			</div>
 
             <!-- List of Clients -->
@@ -270,7 +270,7 @@
 						            <input type="password" class="form-control" id="password" name="password" required>
 						        </div>
 						        <div class="form-group">
-						            <label for="email">Email:</label>
+						            <label for="email">Email:</label>	
 						            <input type="text" class="form-control" id="email" name="email">
 						        </div>
 						        <div class="form-group">
