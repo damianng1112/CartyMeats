@@ -1,9 +1,27 @@
-$(document).ready(function() {
+$(document).ready(function() {  
+	// Initialize DataTables for all tables
+    var clientsTable = $('#clientsTable').DataTable();
+    var surveysTable = $('#surveysTable').DataTable();
+    var feedbacksTable = $('#feedbacksTable').DataTable();
     fetchClients();
     fetchProducts();
     fetchFeedbacks();
+    fetchSurveys();
     fetchClientsForDropdown();
     fetchProductsForDropdown();
+    
+    // Redraw the table when the user selects a filter
+    $('.filter-client').on('change', function() {
+        clientsTable.draw();
+    });
+
+    $('.filter-survey').on('change', function() {
+        surveysTable.draw();
+    });
+
+    $('.filter-feedback').on('change', function() {
+        feedbacksTable.draw();
+    });
     
     $(document).on('click', '.user-icon', function() {
 		console.log("clicked");
@@ -175,6 +193,110 @@ function editProductModal(prodId) {
     });
 }
 
+function populateClientFilters(clients) {
+	// Clear existing options in the filter dropdowns
+    $('#clientNameFilter').empty().append($('<option>').text('All Clients').attr('value', ''));
+    $('#facingFilter').empty().append($('<option>').text('All Facings').attr('value', ''));
+    $('#locationFilter').empty().append($('<option>').text('All Locations').attr('value', ''));
+
+    var clientNames = [];
+    var facings = [];
+    var locations = [];
+
+    // Collect unique values for filters
+    $.each(clients, function(index, client) {
+        if (!clientNames.includes(client.client_name)) {
+            clientNames.push(client.client_name);
+        }
+        if (!facings.includes(client.facing)) {
+            facings.push(client.facing);
+        }
+        if (!locations.includes(client.client_address)) { // Assuming client_address is the location
+            locations.push(client.client_address);
+        }
+    });
+
+    // Populate clientNameFilter dropdown
+    var clientNameFilter = $('#clientNameFilter');
+    $.each(clientNames, function(index, name) {
+        clientNameFilter.append($('<option>').text(name).attr('value', name));
+    });
+
+    // Populate facingFilter dropdown
+    var facingFilter = $('#facingFilter');
+    $.each(facings, function(index, facing) {
+        facingFilter.append($('<option>').text(facing).attr('value', facing));
+    });
+    
+    // Populate locationFilter dropdown
+    var locationFilter = $('#locationFilter');
+    $.each(locations, function(index, location) {
+        locationFilter.append($('<option>').text(location).attr('value', location));
+    });
+}
+
+function populateSurveyFilters(surveys) {
+	// Clear existing options in the filter dropdowns
+    $('#surveyLocationFilter').empty().append($('<option>').text('All Locations').attr('value', ''));
+    $('#surveyProductFilter').empty().append($('<option>').text('All Products').attr('value', ''));
+
+    var locations = [];
+    var products = [];
+
+    // Collect unique values for filters
+    $.each(surveys, function(index, survey) {
+        if (!locations.includes(survey.location)) {
+            locations.push(survey.location);
+        }
+        if (!products.includes(survey.product)) {
+            products.push(survey.product);
+        }
+    });
+
+    // Populate surveyLocationFilter dropdown
+    var surveyLocationFilter = $('#surveyLocationFilter');
+    $.each(locations, function(index, location) {
+        surveyLocationFilter.append($('<option>').text(location).attr('value', location));
+    });
+
+    // Populate surveyProductFilter dropdown
+    var surveyProductFilter = $('#surveyProductFilter');
+    $.each(products, function(index, product) {
+        surveyProductFilter.append($('<option>').text(product).attr('value', product));
+    });
+}
+
+function populateFeedbackFilters(feedbacks) {
+	// Clear existing options in the filter dropdowns
+    $('#feedbackClientFilter').empty().append($('<option>').text('All Clients').attr('value', ''));
+    $('#feedbackProductFilter').empty().append($('<option>').text('All Products').attr('value', ''));
+
+    var clientNames = [];
+    var products = [];
+
+    // Collect unique values for filters
+    $.each(feedbacks, function(index, feedback) {
+        if (!clientNames.includes(feedback.clientName)) {
+            clientNames.push(feedback.clientName);
+        }
+        if (!products.includes(feedback.productName)) {
+            products.push(feedback.productName);
+        }
+    });
+
+    // Populate feedbackClientFilter dropdown
+    var feedbackClientFilter = $('#feedbackClientFilter');
+    $.each(clientNames, function(index, clientName) {
+        feedbackClientFilter.append($('<option>').text(clientName).attr('value', clientName));
+    });
+
+    // Populate feedbackProductFilter dropdown
+    var feedbackProductFilter = $('#feedbackProductFilter');
+    $.each(products, function(index, product) {
+        feedbackProductFilter.append($('<option>').text(product).attr('value', product));
+    });
+}
+
 function fetchProducts() {
     $.ajax({
         type: 'GET',
@@ -197,6 +319,7 @@ function fetchSurveys() {
         dataType: 'json',
         success: function(survey) {
             renderSurveys(survey);
+            populateSurveyFilters(data);
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -302,7 +425,10 @@ var fetchClients=function() {
 		type: 'GET',
 		url: 'FetchClientsServlet',
 		dataType: "json", // data type of response
-		success: renderClients
+		success: function(data) {
+            renderClients(data);
+            populateClientFilters(data); 
+        }
 	});
 };
 
@@ -312,7 +438,10 @@ var fetchFeedbacks=function() {
 		type: 'GET',
 		url: 'FetchFeedbacksServlet',
 		dataType: "json", // data type of response
-		success: renderFeedbacks
+		success: function(data) {
+            renderFeedbacks(data);
+            populateFeedbackFilters(data);
+        }
 	});
 };
 
@@ -471,7 +600,7 @@ function fetchProductsForDropdown() {
         url: 'FetchProductsServlet',
         dataType: 'json',
         success: function(products) {
-            var dropdown = $('#prodName');
+            var dropdown = $('#productName');
             
             // Clear existing options from the dropdown list
 		    dropdown.empty();
@@ -513,6 +642,52 @@ function addBuyerToProduct(productId, buyerName) {
     });
 }
 
+// Custom filtering logic
+$.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
+        if (settings.nTable.id === 'clientsTable') {
+            var clientName = $('#clientNameFilter').val();
+            var facing = $('#facingFilter').val();
+            var location = $('#locationFilter').val();
+            var clientNameColumn = data[0];
+            var locationColumn = data[1]; 
+            var facingColumn = data[2];
+
+            if ((clientName === "" || clientNameColumn === clientName) &&
+                (location === "" || locationColumn === location) &&
+                (facing === "" || facingColumn === facing)) {
+                return true;
+            }
+            return false;
+        }
+
+        if (settings.nTable.id === 'surveysTable') {
+            var location = $('#surveyLocationFilter').val();
+            var product = $('#surveyProductFilter').val();
+            var locationColumn = data[0]; // Assuming location is in the first column
+            var productColumn = data[1]; // Assuming product is in the second column
+
+            if ((location === "" || locationColumn === location) &&
+                (product === "" || productColumn === product)) {
+                return true;
+            }
+            return false;
+        }
+
+        if (settings.nTable.id === 'feedbacksTable') {
+            var clientName = $('#feedbackClientFilter').val();
+            var product = $('#feedbackProductFilter').val();
+            var clientNameColumn = data[2]; // Assuming clientName is in the third column
+            var productColumn = data[3]; // Assuming productName is in the fourth column
+
+            if ((clientName === "" || clientNameColumn === clientName) &&
+                (product === "" || productColumn === product)) {
+                return true;
+            }
+            return false;
+        }
+    }
+);
 
 // Helper function to update the client list
 var updateAllList = function () {

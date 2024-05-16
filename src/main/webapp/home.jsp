@@ -31,6 +31,13 @@
             <!-- Feedback -->
             <div class="tab-pane active" id="feedback">
                 <h2>Feedbacks</h2>
+                <!-- Filters for Feedbacks Table -->
+				<select id="feedbackClientFilter" class="filter-feedback">
+				    <option value="">All Clients</option>
+				</select>
+				<select id="feedbackProductFilter" class="filter-feedback">
+				    <option value="">All Products</option>
+				</select>
                 <!-- Table to display feedbacks -->
                 <table id="feedbacksTable" class="display table table-striped table-bordered">
 			        <thead>
@@ -62,8 +69,8 @@
 				        </select>
 				    </div>
 					<div class="form-group">
-				        <label for="prodName">Select Product:</label>
-				        <select class="form-control" id="prodName" name="prodName" required>
+				        <label for="productName">Select Product:</label>
+				        <select class="form-control" id="productName" name="productName" required>
 				            <!-- Options will be populated dynamically -->
 				        </select>
 				    </div>				    
@@ -149,6 +156,13 @@
             <!-- Price Survey -->
 			<div class="tab-pane" id="price_survey">
                 <h2>Price Survey</h2>
+                <!-- Filters for Surveys Table -->
+				<select id="surveyLocationFilter" class="filter-survey">
+				    <option value="">All Locations</option>
+				</select>
+				<select id="surveyProductFilter" class="filter-survey">
+				    <option value="">All Products</option>
+				</select>
                 <!-- Table for price survey -->
                 <table id="surveysTable" class="display table table-striped table-bordered">
 			        <thead>
@@ -169,6 +183,16 @@
             <div class="tab-pane" id="clients">
                 <h2>Clients</h2>
                 <!-- Table to display clients -->
+                <!-- Filters for Clients Table -->
+				<select id="clientNameFilter" class="filter-client">
+				    <option value="">All Clients</option>
+				</select>
+				<select id="facingFilter" class="filter-client">
+				    <option value="">All Facings</option>
+				</select>
+				<select id="locationFilter" class="filter-client">
+				    <option value="">All Locations</option>
+				</select>
                 <table id="clientsTable" class="display table table-striped table-bordered">
 			        <thead>
 			            <tr>
