@@ -54,6 +54,9 @@
 			        </tbody>
 			    </table>
             </div>
+            <form action="ExportFeedbacksExcelServlet" method="get">
+				<input type="submit" value="Export to Excel">
+			</form>
 
             <!-- List of Product -->
 			<div class="tab-pane" id="products">
