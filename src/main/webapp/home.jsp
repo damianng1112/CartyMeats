@@ -186,26 +186,6 @@
 			        
 			        </tbody>
 			    </table>
-			    <!-- Comparison Section -->
-                <h3>Compare Prices</h3>
-                <form id="comparePricesForm">
-                    <div class="form-group">
-                        <label for="compareProduct1">Product 1:</label>
-                        <select class="form-control" id="compareProduct1" name="compareProduct1" required>
-                            <!-- Options will be populated dynamically -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="compareProduct2">Product 2:</label>
-                        <select class="form-control" id="compareProduct2" name="compareProduct2" required>
-                            <!-- Options will be populated dynamically -->
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-primary" id="comparePricesBtn">Compare</button>
-                </form>
-                <div id="comparisonResult" class="mt-3">
-                    <!-- Comparison results will be displayed here -->
-                </div>
 			</div>
 
             <!-- List of Clients -->
