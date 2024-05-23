@@ -67,12 +67,13 @@ public class UpdateProdServlet extends HttpServlet {
         String categoryString = jsonObject.get("category").getAsString();
         String description = jsonObject.get("description").getAsString();
         int stock = jsonObject.get("stock").getAsInt();
+        double price = jsonObject.get("price").getAsDouble();
 
         // Map the string value of category to the corresponding enum value
         Category category = Category.valueOf(categoryString.toUpperCase()); 
         
         // Construct a Products object with the updated values
-        Products updatedProduct = new Products(prodId, prodName, prodPic, category, description, stock);
+        Products updatedProduct = new Products(prodId, prodName, prodPic, category, description, stock, price);
         
         // Set content type and character encoding
         response.setContentType("application/json");

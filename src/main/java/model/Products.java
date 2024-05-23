@@ -9,33 +9,37 @@ public class Products {
     private Category category;
     private String description;
     private int prodStock;
+    private double price;
     private List<String> clientNames;
     
-    public Products(int prodId, String prodName, String prodPic, Category category, String description, int prodStock, List<String> clientNames) {
+    public Products(int prodId, String prodName, String prodPic, Category category, String description, int prodStock, double price, List<String> clientNames) {
         this.prodId = prodId;
         this.prodName = prodName;
         this.prodPic = prodPic;
         this.category = category;
         this.description = description;
         this.prodStock = prodStock;
+        this.price = price;
         this.clientNames = clientNames;
     }
 
-    public Products(int prodId, String prodName, String prodPic, Category category, String description, int prodStock) {
+    public Products(int prodId, String prodName, String prodPic, Category category, String description, int prodStock, double price) {
         this.prodId = prodId;
         this.prodName = prodName;
         this.prodPic = prodPic;
         this.category = category;
         this.description = description;
         this.prodStock = prodStock;
+        this.price = price;
     }
     
-    public Products(String prodName, String prodPic, Category category, String description, int prodStock) {
+    public Products(String prodName, String prodPic, Category category, String description, int prodStock, double price) {
         this.prodName = prodName;
         this.prodPic = prodPic;
         this.category = category;
         this.description = description;
         this.prodStock = prodStock;
+        this.price = price;
     }
 
     // Getters and setters
@@ -93,5 +97,13 @@ public class Products {
 
 	public void setClientNames(List<String> clientNames) {
 		this.clientNames = clientNames;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 }

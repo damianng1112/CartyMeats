@@ -2,6 +2,7 @@ package model;
 
 import java.util.*;
 import java.sql.*;
+import java.sql.Date;
 
 public enum FeedbacksDAO {
     instance;
@@ -35,7 +36,7 @@ public enum FeedbacksDAO {
         List<Feedbacks> feedbacks = new ArrayList<>();
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT f.feed_id, f.title, f.description, " +
+             ResultSet resultSet = statement.executeQuery("SELECT f.feed_id, f.title, f.description, f.feed_date," +
                                                             "c.client_name, p.prod_name " +
                                                             "FROM feedback f " +
                                                             "INNER JOIN clients c ON f.client_id = c.client_id " +
@@ -45,10 +46,11 @@ public enum FeedbacksDAO {
                 int feedbackId = resultSet.getInt("feed_id");
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");
+                Date date = resultSet.getDate("feed_date");
                 String clientName = resultSet.getString("client_name");
                 String productName = resultSet.getString("prod_name");
 
-                Feedbacks feedback = new Feedbacks(feedbackId, title, description, clientName, productName);
+                Feedbacks feedback = new Feedbacks(feedbackId, title, description, date, clientName, productName);
                 feedbacks.add(feedback);
             }
         } catch (SQLException e) {

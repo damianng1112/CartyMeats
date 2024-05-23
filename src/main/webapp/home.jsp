@@ -44,6 +44,7 @@
 			            <tr>
 			                <th>Title</th>
 			                <th>Description</th>
+			                <th>Date</th>
 			                <th>Client Name</th>
 			                <th>Product Name</th>
 			            </tr>
@@ -105,6 +106,10 @@
 				        <label for="stock">Stock:</label>
 				        <input type="number" class="form-control" id="stock" name="stock" required>
 				    </div>
+				    <div class="form-group">
+				        <label for="price">Price:</label>
+				        <input type="number" class="form-control" id="price" name="price" required>
+				    </div>
 				    <button type="submit" class="btn btn-primary">Add Product</button>
 				</form>
 				<!-- Editing modal product -->
@@ -143,6 +148,10 @@
 							        <label for="editStock">Stock:</label>
 							        <input type="number" class="form-control" id="editStock" name="editStock" required>
 							    </div>
+							    <div class="form-group">
+							        <label for="editPrice">Price:</label>
+							        <input type="number" class="form-control" id="editPrice" name="editPrice" required>
+							    </div>
 			                </div>
 			                <div class="modal-footer">
 			                    <button type="button" class="btn btn-primary" id="btnUpdateProduct">Save Changes</button>
@@ -177,6 +186,26 @@
 			        
 			        </tbody>
 			    </table>
+			    <!-- Comparison Section -->
+                <h3>Compare Prices</h3>
+                <form id="comparePricesForm">
+                    <div class="form-group">
+                        <label for="compareProduct1">Product 1:</label>
+                        <select class="form-control" id="compareProduct1" name="compareProduct1" required>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="compareProduct2">Product 2:</label>
+                        <select class="form-control" id="compareProduct2" name="compareProduct2" required>
+                            <!-- Options will be populated dynamically -->
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="comparePricesBtn">Compare</button>
+                </form>
+                <div id="comparisonResult" class="mt-3">
+                    <!-- Comparison results will be displayed here -->
+                </div>
 			</div>
 
             <!-- List of Clients -->
@@ -197,7 +226,7 @@
 			        <thead>
 			            <tr>
 			                <th>Name</th>
-			                <th>Category</th>
+			                <th>Location</th>
 			                <th>Facing</th>
 			                <th>Options</th>
 			            </tr>

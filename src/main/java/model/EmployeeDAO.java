@@ -2,6 +2,8 @@ package model;
 
 import java.sql.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 
 public enum EmployeeDAO {
 	instance;
@@ -53,20 +55,25 @@ public enum EmployeeDAO {
 	    Employee employee = null;
 	    
 	    try {
-	        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
+	        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM users WHERE username = ?");
 	        pstmt.setString(1, username);
-	        pstmt.setString(2, password);
 	        
 	        ResultSet rs = pstmt.executeQuery();
 	        
-	        if (rs.next()) {
-	            // Employee found, create a new Employees object with the retrieved data
-	            employee = new Employee();
-	            employee.setFullname(rs.getString("fullname"));
-	            employee.setUsername(rs.getString("username"));
-	            employee.setPassword(rs.getString("password"));
-	            employee.setEmail(rs.getString("email"));
-	            employee.setContact(rs.getString("contact"));
+	        if (rs.next()) {	
+	            // Employee found, get the stored hash
+	        	String storedHash = rs.getString("password");
+	        	
+	        	// Verify the provided password against the stored hash
+	            if (BCrypt.checkpw(password, storedHash)) {
+	                // Password matches, create an Employee object with the retrieved data
+	                employee = new Employee();
+	                employee.setFullname(rs.getString("fullname"));
+	                employee.setUsername(rs.getString("username"));
+	                employee.setPassword(storedHash); // Store the hashed password in the object
+	                employee.setEmail(rs.getString("email"));
+	                employee.setContact(rs.getString("contact"));
+	            }
 	        }
 	    } catch (SQLException e) {
 	        // Handle any SQL errors

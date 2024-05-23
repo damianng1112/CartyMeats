@@ -29,7 +29,7 @@ public enum ProductsDAO {
         // Create the MySQL statement for inserting the product
         try {
             PreparedStatement pstmt = con.prepareStatement("INSERT INTO product" +
-                    "  (prod_name, prod_pic, category, description, prod_stock) VALUES " +
+                    "  (prod_name, prod_pic, category, description, prod_stock, price) VALUES " +
                     " (?, ?, ?, ?, ?);");
 
             pstmt.setString(1, product.getProdName());
@@ -37,6 +37,7 @@ public enum ProductsDAO {
             pstmt.setString(3, product.getCategory().name());
             pstmt.setString(4, product.getDescription());
             pstmt.setInt(5, product.getProdStock());
+            pstmt.setDouble(6, product.getPrice());
 
             pstmt.executeUpdate();
 
@@ -63,6 +64,7 @@ public enum ProductsDAO {
                 Category category = Category.valueOf(rs.getString("category").toUpperCase());
                 String description = rs.getString("description");
                 int prod_stock = rs.getInt("prod_stock");
+                double price = rs.getDouble("price");
                 String clientNames = rs.getString("client_names");
 
                 // Initialize an empty list for client names
@@ -73,7 +75,7 @@ public enum ProductsDAO {
                     clientNameList = Arrays.asList(clientNames.split(","));
                 }
 
-                Products product = new Products(prod_id, prod_name, prod_pic, category, description, prod_stock, clientNameList);
+                Products product = new Products(prod_id, prod_name, prod_pic, category, description, prod_stock, price, clientNameList);
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -96,8 +98,9 @@ public enum ProductsDAO {
                 Category category = Category.valueOf(rs.getString("category").toUpperCase());
                 String description = rs.getString("description");
                 int prod_stock = rs.getInt("prod_stock");
+                double price = rs.getDouble("price");
 
-                Products product = new Products(prod_id, prod_name, prod_pic, category, description, prod_stock);
+                Products product = new Products(prod_id, prod_name, prod_pic, category, description, prod_stock, price);
                 return product;
             }
         } catch (SQLException e) {

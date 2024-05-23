@@ -1,4 +1,5 @@
 $(document).ready(function() {  
+
 	// Initialize DataTables for all tables
     var clientsTable = $('#clientsTable').DataTable();
     var surveysTable = $('#surveysTable').DataTable();
@@ -9,6 +10,11 @@ $(document).ready(function() {
     fetchSurveys();
     fetchClientsForDropdown();
     fetchProductsForDropdown();
+    
+    // Event listener for compare button
+    $('#comparePricesBtn').click(function() {
+        comparePrices();
+    });
     
     // Redraw the table when the user selects a filter
     $('.filter-client').on('change', function() {
@@ -183,6 +189,7 @@ function editProductModal(prodId) {
             $('#editCategory').val(data.category);
             $('#editDescription').val(data.description);
             $('#editStock').val(data.stock);
+            $('#editPrice').val(data.price);
 
             // Show the edit modal
             $('#editModalProduct').modal('show');
@@ -319,7 +326,7 @@ function fetchSurveys() {
         dataType: 'json',
         success: function(survey) {
             renderSurveys(survey);
-            populateSurveyFilters(data);
+            populateSurveyFilters(survey);
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -363,6 +370,7 @@ function updateProduct() {
         "category": $('#editCategory').val(),
         "description": $('#editDescription').val(),
         "stock": $('#editStock').val(),
+        "price": $('#editPrice').val(),        
         };
 
     // Make an AJAX request to update the game on the server
@@ -454,7 +462,7 @@ function renderProducts(products) {
     // Loop through the products and create HTML elements to display them
     $.each(products, function(index, product) {
         var productItem = $('<div class="product-item">');
-        productItem.append('<p>' + product.prodPic + '</p>');
+        productItem.append('<img src="' + product.prodPic + '" style="max-width: 100%; height: auto;">');
         productItem.append('<h2>' + product.prodName + '</h2>');
         // Switch case for displaying category
         var categoryText;
@@ -478,6 +486,7 @@ function renderProducts(products) {
         productItem.append('<p> Category: ' + categoryText + '</p>');
         productItem.append('<p> Description: ' + product.description + '</p>');
 		productItem.append('<p> Stock: ' + product.prodStock + '</p>');
+		productItem.append('<p> Price: ' + product.price + '</p>');
 		
         // Check if there are buyers for the product
         if (product.clientNames.length > 0) {
@@ -561,6 +570,7 @@ var renderFeedbacks = function(data) {
             var row = $('<tr>');
             row.append('<td>' + feedback.title + '</td>');
             row.append('<td>' + feedback.description + '</td>');
+            row.append('<td>' + feedback.date + '</td>');
             row.append('<td>' + feedback.clientName + '</td>');
             row.append('<td>' + feedback.productName + '</td>');
             $('#feedbacksTable').DataTable().row.add(row).draw();
@@ -688,6 +698,41 @@ $.fn.dataTable.ext.search.push(
         }
     }
 );
+
+
+
+// Function to compare prices
+function comparePrices() {
+    var product1 = $('#compareProduct1').val();
+    var product2 = $('#compareProduct2').val();
+
+    $.ajax({
+        type: 'GET',
+        url: 'FetchSurveyServlet', // Adjust the URL to match your servlet endpoint
+        dataType: 'json',
+        success: function(surveyData) {
+            var product1Data = surveyData.filter(item => item.product === product1);
+            var product2Data = surveyData.filter(item => item.product === product2);
+
+            let comparisonHTML = '<h4>Comparison Results</h4>';
+            comparisonHTML += `<h5>${product1}</h5>`;
+            product1Data.forEach(item => {
+                comparisonHTML += `<p>Location: ${item.location}, Price: $${item.price}</p>`;
+            });
+            comparisonHTML += `<h5>${product2}</h5>`;
+            product2Data.forEach(item => {
+                comparisonHTML += `<p>Location: ${item.location}, Price: $${item.price}</p>`;
+            });
+
+            $('#comparisonResult').html(comparisonHTML);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Failed to fetch survey data. Please try again later.');
+        }
+    });
+}
+
 
 // Helper function to update the client list
 var updateAllList = function () {

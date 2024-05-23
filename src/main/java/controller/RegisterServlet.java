@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import model.*;
 
 /**
@@ -45,9 +47,11 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String contact = request.getParameter("contact");
+		//Hash password
+		String hash_password = BCrypt.hashpw(password, BCrypt.gensalt());
 		Employee employee;
 		try {
-			employee = new Employee(fullname, username, password, email, contact);
+			employee = new Employee(fullname, username, hash_password, email, contact);
 			try {
 				EmployeeDAO.instance.registerEmployee(employee);
 				System.out.println("employee saved");

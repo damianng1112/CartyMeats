@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Employee Login Page</title>
+    <link rel="stylesheet" href="assets/css/styles.css"/>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #e4bf80;
             margin: 0;
             padding: 0;
         }
@@ -20,7 +22,7 @@
         }
         h2 {
             margin-top: 0;
-            color: #333;
+            color: #602033;
         }
         #login_form {
             display: flex;
@@ -28,7 +30,7 @@
         }
         label {
             margin-bottom: 5px;
-            color: #333;
+            color: #602033;
         }
         input[type="text"], input[type="password"] {
             margin-bottom: 15px;
@@ -38,8 +40,8 @@
             font-size: 14px;
         }
         input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #e4bf80;
+            color: #602033;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
@@ -47,7 +49,7 @@
             font-size: 16px;
         }
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #f1bf80;
         }
         .error {
             color: red;

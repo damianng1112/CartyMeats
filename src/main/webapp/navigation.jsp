@@ -7,7 +7,8 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        backgroundcolor: #f00f0;        margin: 0;
+        background-color: #e4bf80;        
+        margin: 0;
         padding: 0;
     }
     .container {
@@ -19,13 +20,13 @@
     }
     h1 {
         margin-top: 0;
-        color: #333;
+        color: #602033;
     }
     h3 {
-        color: #333;
+        color: #602033;
     }
     a {
-        color: #4CAF50;
+        color: #602033;
         text-decoration: none;
         margin-right: 10px;
     }

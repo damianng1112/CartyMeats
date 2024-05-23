@@ -43,9 +43,10 @@ public class AddProductServlet extends HttpServlet {
         Category category = Category.valueOf(request.getParameter("category").toUpperCase());
         String description = request.getParameter("description");        
         int stock = Integer.parseInt(request.getParameter("stock"));
+        double price = Double.parseDouble("price");
         
         // Create a Products object
-        Products product = new Products(prodName, prodPic, category, description, stock);
+        Products product = new Products(prodName, prodPic, category, description, stock, price);
         
         try {
             // Call createClient method in ClientsDAO to add the client to the database

@@ -1,19 +1,22 @@
 package model;
+import java.sql.Date;
 
 public class Feedbacks {
     private int feedbackId;
     private String title;
     private String description;
+    private Date date;
     private int clientId;
     private int productId;
     private String clientName;
     private String productName;
 
     // Constructor
-    public Feedbacks(int feedbackId, String title, String description, String clientName, String productName) {
+    public Feedbacks(int feedbackId, String title, String description, Date date, String clientName, String productName) {
         this.feedbackId = feedbackId;
         this.title = title;
         this.description = description;
+        this.date = date;
         this.clientName = clientName;
         this.productName = productName;
     }
@@ -82,4 +85,12 @@ public class Feedbacks {
     public void setProductId(String productName) {
         this.productName = productName;
     }
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 }
